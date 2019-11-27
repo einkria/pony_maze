@@ -1,0 +1,9 @@
+<h2>Welcome to the rainbow maze!</h2>
+<h2>Pick a player:</h2>
+<div>
+    <select (change)="onChange($event.target.value)">
+        <option value="">Who's your favourite?</option>
+        <option *ngFor="let pony of myPonies" [value]="pony">{{pony}}</option>
+    </select>
+</div>
+<button *ngIf="ponySelected" style="margin-top: 10px" (click)="startMaze()">Lets Go!</button>
