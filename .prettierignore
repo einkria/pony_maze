@@ -1,0 +1,11 @@
+# No need to check format
+angular.json
+package.json
+package-lock.json
+gulpfile.js
+proxy.conf.json
+routes.json
+server.js
+tsconfig.json
+tslint.json
+db.json
