@@ -96,6 +96,8 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
         this.cdRef.detectChanges();
       },
       error => {
+        // JSON parser in angular http client throws an error when trying to parse the maze string.
+        // Therefore we end up in the error response and use that to display the maze.
         this.mazeString = JSON.parse(JSON.stringify(error.error.text));
         this.maze = this.mazeString.split('\n');
         this.cdRef.detectChanges();
