@@ -1,10 +1,14 @@
 import { Component, OnInit, ChangeDetectorRef, HostListener, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
+import { WinningDialogComponent } from '../winning-dialog/winning-dialog.component';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MazeMove } from '../../models/maze-move';
 import { PrintMazeService } from '../../services/print-maze.service';
 import { MazeMakeMoveService } from '../../services/maze-make-move.service';
 import { CurrentMazeIdService } from '../../services/current-maze-id.service';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-play-maze',
@@ -22,7 +26,9 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     private printMazeService: PrintMazeService,
     private cdRef: ChangeDetectorRef,
     private makeMoveService: MazeMakeMoveService,
-    private currentMazeIdService: CurrentMazeIdService
+    private currentMazeIdService: CurrentMazeIdService,
+    private dialogService: DialogService,
+    private router: Router
   ) {
     this.mazeMove = new MazeMove();
     this.idSubscription = this.currentMazeIdService.mazeIdChange.subscribe(id => {
@@ -40,28 +46,23 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
   north(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp': {
-        console.log('north');
         this.mazeMove.direction = 'north';
         break;
       }
       case 'ArrowDown': {
-        console.log('south');
         this.mazeMove.direction = 'south';
         break;
       }
       case 'ArrowRight': {
-        console.log('east');
         this.mazeMove.direction = 'east';
         break;
       }
       case 'ArrowLeft': {
-        console.log('west');
         this.mazeMove.direction = 'west';
         break;
       }
       default: {
-        console.log('not a valid key');
-        break;
+        return;
       }
     }
     this.makeMove();
@@ -70,11 +71,12 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
   makeMove() {
     this.makeMoveService.makeMove(this.mazeMove, this.mazeId).subscribe(
       res => {
-        console.log(res);
-        this.printMaze();
+        this.checkWinner(res.state);
+        // over - loss
+        // won - win
       },
       error => {
-        console.log(error);
+        this.showError('Could not make a move');
       }
     );
   }
@@ -87,12 +89,37 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
       },
       error => {
         this.mazeString = JSON.parse(JSON.stringify(error.error.text));
-        console.log(this.mazeString);
         this.maze = this.mazeString.split('\n');
-        console.log(this.maze);
         this.cdRef.detectChanges();
       }
     );
+  }
+
+  checkWinner(state) {
+    if (state === 'won') {
+      this.showWinner();
+      return;
+    }
+    if (state === 'over') {
+      this.showLoser();
+      return;
+    }
+    this.printMaze();
+  }
+
+  showWinner() {
+    this.dialogService.openDialog(WinningDialogComponent, false, '66%', '80%', 'winner.jpg');
+    this.router.navigate(['']);
+  }
+
+  showLoser() {
+    this.dialogService.openDialog(WinningDialogComponent, false, '66%', '80%', 'loser.jpg');
+    this.router.navigate(['']);
+  }
+
+  showError(msg: string) {
+    this.dialogService.openDialog(ErrorDialogComponent, false, '33%', '33%', msg);
+    this.router.navigate(['']);
   }
 
   ngOnDestroy() {

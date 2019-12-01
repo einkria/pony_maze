@@ -14,7 +14,6 @@ export class NewMazeService {
   constructor(private http: HttpClient) {}
 
   createNewMaze(newMazeInfo: NewMazeInfo): Observable<any> {
-    console.log(JSON.stringify(newMazeInfo));
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>(this.mazeUrl, JSON.stringify(newMazeInfo), { headers });
   }
