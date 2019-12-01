@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
+/**
+ * Dialog component (modal) to display errors to users.
+ */
 @Component({
   selector: 'app-error-dialog',
   templateUrl: './error-dialog.component.html',

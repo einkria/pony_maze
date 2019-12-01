@@ -9,6 +9,10 @@ import { CurrentMazeIdService } from '../../services/observables/current-maze-id
 import { NewMazeService } from '../../services/maze-api/new-maze.service';
 import { DialogService } from '../../services/dialog/dialog.service';
 
+/**
+ * Front page of application where user chooses name of pony and dimensions of maze before starting
+ * the gameplay. After user presses 'Lets go' button, calls API to create new maze via NewMazeService.
+ */
 @Component({
   selector: 'app-start-maze',
   templateUrl: './start-maze.component.html',
@@ -34,6 +38,8 @@ export class StartMazeComponent implements OnInit {
     this.newMazeInfo['maze-width'] = 15;
   }
   ngOnInit() {}
+
+  // Create new maze via API
   startMaze() {
     this.newMazeInfo['maze-player-name'] = this.selectedPony;
 
@@ -49,6 +55,7 @@ export class StartMazeComponent implements OnInit {
     );
   }
 
+  // Detects when user chooses pony name and sets it to the choice
   onChange(pony) {
     if (this.myPonies.includes(pony)) {
       this.selectedPony = pony;
@@ -60,14 +67,17 @@ export class StartMazeComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
+  // Detects and sets width of maze
   onWidthChange(width) {
     this.newMazeInfo['maze-width'] = +width;
   }
 
+  // Detects and sets height of maze
   onHeightChange(height) {
     this.newMazeInfo['maze-height'] = +height;
   }
 
+  // Display error to user
   showError(msg: string) {
     this.dialogService.openDialog(ErrorDialogComponent, false, '33%', '33%', msg);
     this.router.navigate(['']);

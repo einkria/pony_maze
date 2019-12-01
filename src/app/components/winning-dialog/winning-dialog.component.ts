@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
+/**
+ * Displays either winner or loser image to user. Image name is given in data.message.
+ */
 @Component({
   selector: 'app-winning-dialog',
   templateUrl: './winning-dialog.component.html',

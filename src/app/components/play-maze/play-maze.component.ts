@@ -10,6 +10,12 @@ import { MazeMakeMoveService } from '../../services/maze-api/maze-make-move.serv
 import { CurrentMazeIdService } from '../../services/observables/current-maze-id.service';
 import { DialogService } from '../../services/dialog/dialog.service';
 
+/**
+ * Component where main gameplay takes place. Receives moves from user and sends to API via
+ * MazeMakeMoveService. Also uses API via PrintMazeService to print the maze after each move.
+ * After each move, it checks whether the game has been won/lost and if so calls to DialogService
+ * to display the appropriate image.
+ */
 @Component({
   selector: 'app-play-maze',
   templateUrl: './play-maze.component.html',
@@ -31,6 +37,7 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.mazeMove = new MazeMove();
+    // Get the current maze id received from API
     this.idSubscription = this.currentMazeIdService.mazeIdChange.subscribe(id => {
       if (id !== undefined) {
         this.mazeId = id;
@@ -42,6 +49,7 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     this.printMaze();
   }
 
+  // Listens to the keydown DOM event for user move
   @HostListener('document:keydown', ['$event'])
   north(event: KeyboardEvent) {
     switch (event.key) {
@@ -68,12 +76,11 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     this.makeMove();
   }
 
+  // Sends move to API
   makeMove() {
     this.makeMoveService.makeMove(this.mazeMove, this.mazeId).subscribe(
       res => {
         this.checkWinner(res.state);
-        // over - loss
-        // won - win
       },
       error => {
         this.showError('Could not make a move');
@@ -81,6 +88,7 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     );
   }
 
+  // Print maze with updated positions
   printMaze() {
     this.printMazeService.printCurrentState(this.mazeId).subscribe(
       res => {
@@ -95,6 +103,7 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     );
   }
 
+  // Reading reply from API to check wheter game is won/lost or not
   checkWinner(state) {
     if (state === 'won') {
       this.showWinner();
@@ -107,16 +116,19 @@ export class PlayMazeComponent implements OnInit, OnDestroy {
     this.printMaze();
   }
 
+  // Display to user they have won the game.
   showWinner() {
     this.dialogService.openDialog(WinningDialogComponent, false, '66%', '80%', 'winner.jpg');
     this.router.navigate(['']);
   }
 
+  // Display to user they have lost the game.
   showLoser() {
     this.dialogService.openDialog(WinningDialogComponent, false, '66%', '80%', 'loser.jpg');
     this.router.navigate(['']);
   }
 
+  // Display to user if error occurred
   showError(msg: string) {
     this.dialogService.openDialog(ErrorDialogComponent, false, '33%', '33%', msg);
     this.router.navigate(['']);
