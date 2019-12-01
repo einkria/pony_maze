@@ -1,9 +1,16 @@
 <h2>Welcome to the rainbow maze!</h2>
-<h2>Pick a player:</h2>
+<h2>Pick a Pony:</h2>
 <div>
     <select (change)="onChange($event.target.value)">
         <option value="">Who's your favourite?</option>
         <option *ngFor="let pony of myPonies" [value]="pony">{{pony}}</option>
     </select>
+</div>
+<div>
+    <h2>Set maze size</h2>
+    <p>Width:</p>  
+    <input type="number" name="width" min="15" max="25" value="15" step="5" (change)="onWidthChange($event.target.value)"><br>
+    <p>Height:</p> 
+    <input type="number" name="height" min="15" max="25" value="15" step="5" (change)="onHeightChange($event.target.value)"><br>
 </div>
 <button *ngIf="ponySelected" style="margin-top: 10px" (click)="startMaze()">Lets Go!</button>
