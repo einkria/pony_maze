@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Ponies } from '../../models/ponies';
 import { NewMazeInfo } from '../../models/new-maze-info';
-import { CurrentPonyService } from '../../services/current-pony.service';
-import { CurrentMazeIdService } from '../../services/current-maze-id.service';
-import { NewMazeService } from '../../services/new-maze.service';
-import { DialogService } from '../../services/dialog.service';
+import { CurrentPonyService } from '../../services/observables/current-pony.service';
+import { CurrentMazeIdService } from '../../services/observables/current-maze-id.service';
+import { NewMazeService } from '../../services/maze-api/new-maze.service';
+import { DialogService } from '../../services/dialog/dialog.service';
 
 @Component({
   selector: 'app-start-maze',

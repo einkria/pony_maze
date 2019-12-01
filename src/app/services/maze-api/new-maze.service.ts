@@ -3,19 +3,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { MazeMove } from '../models/maze-move';
+import { NewMazeInfo } from '../../models/new-maze-info';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MazeMakeMoveService {
-  private mazeUrl = environment.apiUrl + 'maze/';
+export class NewMazeService {
+  private mazeUrl = environment.apiUrl + 'maze';
 
   constructor(private http: HttpClient) {}
 
-  makeMove(move: MazeMove, mazeId: string): Observable<any> {
-    const url = this.mazeUrl + mazeId;
+  createNewMaze(newMazeInfo: NewMazeInfo): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>(url, JSON.stringify(move), { headers });
+    return this.http.post<any>(this.mazeUrl, JSON.stringify(newMazeInfo), { headers });
   }
 }

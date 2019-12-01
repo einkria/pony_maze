@@ -5,10 +5,10 @@ import { Router } from '@angular/router';
 import { WinningDialogComponent } from '../winning-dialog/winning-dialog.component';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MazeMove } from '../../models/maze-move';
-import { PrintMazeService } from '../../services/print-maze.service';
-import { MazeMakeMoveService } from '../../services/maze-make-move.service';
-import { CurrentMazeIdService } from '../../services/current-maze-id.service';
-import { DialogService } from '../../services/dialog.service';
+import { PrintMazeService } from '../../services/maze-api/print-maze.service';
+import { MazeMakeMoveService } from '../../services/maze-api/maze-make-move.service';
+import { CurrentMazeIdService } from '../../services/observables/current-maze-id.service';
+import { DialogService } from '../../services/dialog/dialog.service';
 
 @Component({
   selector: 'app-play-maze',

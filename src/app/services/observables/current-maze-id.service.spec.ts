@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CurrentMazeIdService } from './current-maze-id.service';
+import { CurrentMazeIdService } from '../observables/current-maze-id.service';
 
 describe('CurrentMazeIdService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
