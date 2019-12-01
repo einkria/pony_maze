@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
+/**
+ * Sets parameters and opens up a modal dialog.
+ */
 @Injectable({
   providedIn: 'root',
 })

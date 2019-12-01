@@ -5,6 +5,9 @@ import { environment } from 'src/environments/environment';
 
 import { MazeMove } from '../../models/maze-move';
 
+/**
+ * Sends user move to TrustPilot API
+ */
 @Injectable({
   providedIn: 'root',
 })

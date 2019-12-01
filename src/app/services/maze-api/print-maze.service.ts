@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+/**
+ * Calls to TrustPilot API to get a printable version of the maze.
+ */
 @Injectable({
   providedIn: 'root',
 })

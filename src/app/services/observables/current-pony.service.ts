@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+/**
+ * Stores the current pony name chosen by the user, so that all components that need it can subscribe to it.
+ */
 @Injectable({
   providedIn: 'root',
 })

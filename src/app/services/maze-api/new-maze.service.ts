@@ -5,6 +5,9 @@ import { environment } from 'src/environments/environment';
 
 import { NewMazeInfo } from '../../models/new-maze-info';
 
+/**
+ * Calls to TrustPilot API to create a new maze.
+ */
 @Injectable({
   providedIn: 'root',
 })
